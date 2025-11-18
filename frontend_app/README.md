@@ -1,82 +1,39 @@
-# Lightweight React Template for KAVIA
+# Cinema Ticket Booking Frontend
 
-This project provides a minimal React template with a clean, modern UI and minimal dependencies.
+A lightweight React app for browsing movies, selecting showtimes, holding seats, and creating bookings with a mock payment flow. It targets the backend FastAPI service on port 3001 by default.
 
-## Features
+## Run
 
-- **Lightweight**: No heavy UI frameworks - uses only vanilla CSS and React
-- **Modern UI**: Clean, responsive design with KAVIA brand styling
-- **Fast**: Minimal dependencies for quick loading times
-- **Simple**: Easy to understand and modify
+- Install deps: `npm install`
+- Start: `npm start` (http://localhost:3000)
 
-## Getting Started
+By default the API base URL is:
+- `http://<host>:3001`, where `<host>` is the browser hostname
 
-In the project directory, you can run:
+Override via env:
+- `REACT_APP_API_BASE_URL=https://your-backend.example.com`
 
-### `npm start`
+## Pages
 
-Runs the app in development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- `/` — Movies listing (`GET /movies`)
+- `/movies/:movieId` — Movie detail + showtimes (`GET /movies/:id`, `GET /movies/:id/showtimes`)
+- `/showtimes/:showtimeId/seats` — Seat map with hold/release and Pay & Book
+  - `GET /showtimes/:id` `GET /showtimes/:id/seats`
+  - `POST /showtimes/:id/hold` `DELETE /holds/:hold_id`
+  - `POST /payments/intent` `POST /payments/confirm`
+  - `POST /bookings` (then redirect to booking page)
+- `/bookings/:bookingId` — Booking confirmation (`GET /bookings/:id`)
+- `/login` — Mock login (`POST /auth/login`)
+- `/register` — Mock registration (`POST /users` then login)
 
-### `npm test`
+## Theming
 
-Launches the test runner in interactive watch mode.
+Light theme accents:
+- Primary: `#3b82f6`
+- Success/secondary accent: `#06b6d4`
+The theme toggle is available bottom-right.
 
-### `npm run build`
+## Notes
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-## Customization
-
-### Colors
-
-The main brand colors are defined as CSS variables in `src/App.css`:
-
-```css
-:root {
-  --kavia-orange: #E87A41;
-  --kavia-dark: #1A1A1A;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
-}
-```
-
-### Components
-
-This template uses pure HTML/CSS components instead of a UI framework. You can find component styles in `src/App.css`. 
-
-Common components include:
-- Buttons (`.btn`, `.btn-large`)
-- Container (`.container`)
-- Navigation (`.navbar`)
-- Typography (`.title`, `.subtitle`, `.description`)
-
-## Learn More
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Auth is mock and stored in localStorage (token/email) for demonstration only.
+- Payment is a mocked flow using the backend’s payment intent/confirm endpoints.
